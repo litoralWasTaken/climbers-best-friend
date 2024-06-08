@@ -5,8 +5,12 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet';
+import "leaflet/dist/leaflet.css";
+import Map from '@/Components/map/Map.vue';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+const appName = 'Climber\'s Best Friend';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -15,9 +19,15 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(LMap)
+            .use(LTileLayer)
+            .use(LMarker)
+            .use(Map)
             .mount(el);
     },
     progress: {
         color: '#4B5563',
     },
 });
+
+

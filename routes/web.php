@@ -21,4 +21,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::get('/profile', function () {
+        return Inertia::render('Profile/Show');
+    })->name('show');
+    Route::get('/map', function () {
+        return Inertia::render('MapPage');
+    })->name('map');
 });
+
+
