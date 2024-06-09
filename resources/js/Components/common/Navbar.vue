@@ -44,13 +44,20 @@ export default {
         toggleNavbar() {
             console.log('clicado');
             this.dropdownOpen = !this.dropdownOpen
+        },
+
+        resize() {
+            if (window.innerWidth >= 720) {
+                this.dropdownOpen = true;
+            }
         }
     },
 
-    mounted() {
+    created() {
         if (window.innerWidth >= 720) {
             this.dropdownOpen = true;
         }
+        window.addEventListener('resize', this.resize);
     }
 }
 </script>
