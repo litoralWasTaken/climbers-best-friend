@@ -2,6 +2,7 @@
     <AppLayout title="Mapa">
 
     </AppLayout>
+    <div class="spacer"></div>
     <Map></Map>
 </template>
 
@@ -17,3 +18,7 @@ export default {
     }
 }
 </script>
+
+<style>
+
+</style>

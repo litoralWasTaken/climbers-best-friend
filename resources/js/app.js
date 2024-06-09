@@ -8,6 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet';
 import "leaflet/dist/leaflet.css";
 import Map from '@/Components/map/Map.vue';
+import Navbar from '@/Components/common/Navbar.vue'
 
 
 const appName = 'Climber\'s Best Friend';
@@ -22,6 +23,7 @@ createInertiaApp({
             .use(LMap)
             .use(LTileLayer)
             .use(LMarker)
+            .use(Navbar)
             .use(Map)
             .mount(el);
     },
