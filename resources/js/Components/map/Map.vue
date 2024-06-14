@@ -14,6 +14,7 @@ export default {
     data() {
         return {
             initialMap: null,
+            layer: null,
         };
     },
     mounted() {
@@ -34,7 +35,35 @@ export default {
         }).addTo(this.initialMap)
 
 
-        omnivore.kml('/lapedriza.kml').addTo(this.initialMap)
+        this.layer = omnivore.kml('/lapedriza.kml')
+        .on('ready', (layerInternal) => {
+            // this.addTo(this.initialMap)
+
+            this.addClickEvent(layerInternal)
+        }).addTo(this.initialMap)
+    },
+
+    methods: {
+        addClickEvent(layer) {
+            console.log(layer);
+            for (const key in layer.sourceTarget._layers) {
+                if (Object.hasOwnProperty.call(layer.sourceTarget._layers, key)) {
+                    const marker = layer.sourceTarget._layers[key];
+                    console.log(marker);
+                    if (marker.feature && marker.feature.properties) {
+                        let folderName = marker.feature.properties.name
+                        let leaflet_id = marker._leaflet_id
+
+                        if (marker.feature.geometry.type == 'Point') {
+                            marker.on('click', () => {
+                                console.log(folderName);
+                                console.log(leaflet_id);
+                            })
+                        }
+                    }
+                }
+            }
+        },
     },
 
     created() {
