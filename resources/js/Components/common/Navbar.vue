@@ -42,7 +42,6 @@ export default {
     },
     methods: {
         toggleNavbar() {
-            console.log('clicado');
             this.dropdownOpen = !this.dropdownOpen
         },
 
