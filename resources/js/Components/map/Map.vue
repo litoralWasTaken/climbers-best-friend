@@ -49,15 +49,15 @@ export default {
             for (const key in layer.sourceTarget._layers) {
                 if (Object.hasOwnProperty.call(layer.sourceTarget._layers, key)) {
                     const marker = layer.sourceTarget._layers[key];
-                    console.log(marker);
                     if (marker.feature && marker.feature.properties) {
                         let folderName = marker.feature.properties.name
                         let leaflet_id = marker._leaflet_id
 
                         if (marker.feature.geometry.type == 'Point') {
                             marker.on('click', () => {
-                                console.log(folderName);
-                                console.log(leaflet_id);
+                                axios.get('/routes').then(resp => {
+                                    console.log(resp)
+                                })
                             })
                         }
                     }
