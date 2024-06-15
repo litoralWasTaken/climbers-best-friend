@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/routes', [RouteController::class, 'index']);
+Route::get('/routes/{index}', [RouteController::class, 'show']);

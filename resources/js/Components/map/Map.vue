@@ -1,4 +1,5 @@
 <template>
+    <ErrorAlert :showAlert="showAlert" :alertErrors="alertErrors" @updateShowAlert="showAlert = false"></ErrorAlert>
     <div id="map" style="">
     </div>
 </template>
@@ -8,13 +9,18 @@ import "leaflet/dist/leaflet.css";
 import * as  spainGeoJson from '../../../../public/spainGeo.json'
 import * as L from 'leaflet';
 import * as omnivore from 'leaflet-omnivore'
+import ErrorAlert from '../common/ErrorAlert.vue'
 
 export default {
-    components: {},
+    components: {
+        ErrorAlert,
+    },
     data() {
         return {
             initialMap: null,
             layer: null,
+            showAlert: false,
+            alertErrors: [],
         };
     },
     mounted() {
@@ -45,7 +51,6 @@ export default {
 
     methods: {
         addClickEvent(layer) {
-            console.log(layer);
             for (const key in layer.sourceTarget._layers) {
                 if (Object.hasOwnProperty.call(layer.sourceTarget._layers, key)) {
                     const marker = layer.sourceTarget._layers[key];
@@ -55,8 +60,14 @@ export default {
 
                         if (marker.feature.geometry.type == 'Point') {
                             marker.on('click', () => {
-                                axios.get('/routes').then(resp => {
-                                    console.log(resp)
+                                axios.get(`/api/routes/${leaflet_id}`)
+                                .then(resp => {
+                                    console.log(resp.data);
+                                }).catch(error => {
+                                    this.alertErrors = [];
+                                    this.alertErrors.push(error.response.status)
+                                    this.alertErrors.push(error.response.data.message)
+                                    this.showAlert = true;
                                 })
                             })
                         }
@@ -77,7 +88,7 @@ export default {
     #map {
         flex-grow: 1;
         position: absolute;
-        height: 100%;
+        height: 96%;
         width: 100%;
     }
 </style>
