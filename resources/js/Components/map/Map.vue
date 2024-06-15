@@ -2,6 +2,7 @@
     <ErrorAlert :showAlert="showAlert" :alertErrors="alertErrors" @updateShowAlert="showAlert = false"></ErrorAlert>
     <div id="map" style="">
     </div>
+    <MapResult :showResult="showResult" :pointData="pointData"></MapResult>
 </template>
 
 <script>
@@ -10,17 +11,24 @@ import * as  spainGeoJson from '../../../../public/spainGeo.json'
 import * as L from 'leaflet';
 import * as omnivore from 'leaflet-omnivore'
 import ErrorAlert from '../common/ErrorAlert.vue'
+import MapResult from '../map/MapResult.vue'
+
 
 export default {
     components: {
         ErrorAlert,
+        MapResult
     },
     data() {
         return {
             initialMap: null,
             layer: null,
+
             showAlert: false,
             alertErrors: [],
+
+            showResult: false,
+            pointData: {}
         };
     },
     mounted() {
@@ -42,11 +50,11 @@ export default {
 
 
         this.layer = omnivore.kml('/lapedriza.kml')
-        .on('ready', (layerInternal) => {
-            // this.addTo(this.initialMap)
+            .on('ready', (layerInternal) => {
+                // this.addTo(this.initialMap)
 
-            this.addClickEvent(layerInternal)
-        }).addTo(this.initialMap)
+                this.addClickEvent(layerInternal)
+            }).addTo(this.initialMap)
     },
 
     methods: {
@@ -60,21 +68,31 @@ export default {
 
                         if (marker.feature.geometry.type == 'Point') {
                             marker.on('click', () => {
-                                axios.get(`/api/routes/${leaflet_id}`)
-                                .then(resp => {
-                                    console.log(resp.data);
-                                }).catch(error => {
-                                    this.alertErrors = [];
-                                    this.alertErrors.push(error.response.status)
-                                    this.alertErrors.push(error.response.data.message)
-                                    this.showAlert = true;
-                                })
+                                // TODO: cambiar api para que tenga un ID de mapa consistente y use dicha ID
+                                // quizas usar lat/long??
+                                axios.get(`/api/routes`)
+                                    .then(resp => {
+                                        this.showResult = true;
+                                        this.pointData = {};
+                                        this.pointData = resp.data
+                                        Object.assign(this.pointData, {'point_name': folderName})
+                                    }).catch(error => {
+                                        this.alertErrors = [];
+                                        this.alertErrors.push(error.response.status)
+                                        this.alertErrors.push(error.response.data.message)
+                                        this.showAlert = true;
+                                    })
                             })
                         }
                     }
                 }
             }
         },
+    },
+
+
+    updateShowResult() {
+        console.log('no implementado');
     },
 
     created() {
@@ -85,10 +103,10 @@ export default {
 
 
 <style>
-    #map {
-        flex-grow: 1;
-        position: absolute;
-        height: 96%;
-        width: 100%;
-    }
+#map {
+    flex-grow: 1;
+    position: absolute;
+    height: 96%;
+    width: 100%;
+}
 </style>
