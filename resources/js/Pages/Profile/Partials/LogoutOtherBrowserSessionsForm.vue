@@ -45,16 +45,16 @@ const closeModal = () => {
 <template>
     <ActionSection>
         <template #title>
-            Browser Sessions
+            Sesiones de Navegador
         </template>
 
         <template #description>
-            Manage and log out your active sessions on other browsers and devices.
+            Gestiona y desconéctese de sus sesiones activas en otros navegadores y dispositivos.
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.
+                Si es necesario, puede desconectarse de todas sus otras sesiones a lo largo de todos sus dispositivos. Algunas de sus sesiones recientes están listadas abajo; esta lista puede que no sea exhaustiva. Si siente que su cuenta ha sido comprometida, debería actualizar su contraseña.
             </div>
 
             <!-- Other Browser Sessions -->
@@ -79,8 +79,8 @@ const closeModal = () => {
                             <div class="text-xs text-gray-500">
                                 {{ session.ip_address }},
 
-                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">This device</span>
-                                <span v-else>Last active {{ session.last_active }}</span>
+                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">Éste dispositivo</span>
+                                <span v-else>Última vez activo {{ session.last_active }}</span>
                             </div>
                         </div>
                     </div>
@@ -89,22 +89,22 @@ const closeModal = () => {
 
             <div class="flex items-center mt-5">
                 <PrimaryButton @click="confirmLogout">
-                    Log Out Other Browser Sessions
+                    Desconectar de otras sesiones de navegadores
                 </PrimaryButton>
 
                 <ActionMessage :on="form.recentlySuccessful" class="ms-3">
-                    Done.
+                    Hecho.
                 </ActionMessage>
             </div>
 
             <!-- Log Out Other Devices Confirmation Modal -->
             <DialogModal :show="confirmingLogout" @close="closeModal">
                 <template #title>
-                    Log Out Other Browser Sessions
+                    Desconectar otras sesiones de navegadores
                 </template>
 
                 <template #content>
-                    Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
+                    Por favor introduzca su contraseña para confirmar que le gustaría desconectarse de sus otras sesiones de todos sus dispositivos.
 
                     <div class="mt-4">
                         <TextInput
@@ -123,7 +123,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <SecondaryButton @click="closeModal">
-                        Cancel
+                        Cancelar
                     </SecondaryButton>
 
                     <PrimaryButton
@@ -132,7 +132,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="logoutOtherBrowserSessions"
                     >
-                        Log Out Other Browser Sessions
+                        Desconectar otras sesiones de navegadores
                     </PrimaryButton>
                 </template>
             </DialogModal>
