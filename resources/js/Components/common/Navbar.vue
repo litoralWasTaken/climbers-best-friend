@@ -6,15 +6,28 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
         </button>
-        <ul v-if="dropdownOpen">
-            <template v-for="linkObj in links">
-                <li>
-                    <Link :href="linkObj.link" :class="getCurrentLink == linkObj.link ? 'text-purple-700' : ''">
-                    {{ linkObj.name }}
-                    </Link>
-                </li>
-            </template>
-        </ul>
+        <div class="w-full" v-if="$page.props.auth.user">
+            <ul v-if="dropdownOpen">
+                <template v-for="linkObj in links">
+                    <li>
+                        <Link :href="linkObj.link" :class="getCurrentLink == linkObj.link ? 'text-purple-700' : ''">
+                        {{ linkObj.name }}
+                        </Link>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="w-full " v-else>
+            <ul class="flex justify-end" v-if="dropdownOpen">
+                <template v-for="linkObj in notLoggedLinks">
+                    <li>
+                        <Link :href="linkObj.link">
+                        {{ linkObj.name }}
+                        </Link>
+                    </li>
+                </template>
+            </ul>
+        </div>
     </nav>
 
 </template>
@@ -37,6 +50,10 @@ export default {
                 { 'name': 'Inicio', 'link': '/dashboard' },
                 { 'name': 'Mapa', 'link': '/map' },
                 { 'name': 'Perfil', 'link': '/profile' },
+            ],
+            notLoggedLinks: [
+                {'name': 'Iniciar sesión', 'link': '/login'},
+                {'name': 'Regístrate', 'link': '/register'},
             ]
         }
     },
@@ -102,6 +119,4 @@ button {
     }
 
 }
-
-
 </style>
