@@ -89,7 +89,7 @@ const closeModal = () => {
 
             <div class="flex items-center mt-5">
                 <PrimaryButton @click="confirmLogout">
-                    Desconectar de otras sesiones de navegadores
+                    Desconectar de otras sesiones
                 </PrimaryButton>
 
                 <ActionMessage :on="form.recentlySuccessful" class="ms-3">
