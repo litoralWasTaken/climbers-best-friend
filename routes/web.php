@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Jetstream\Jetstream;
@@ -30,9 +31,12 @@ Route::middleware([
 
     Route::get('/profile', function () {
         $user = Auth::user();
+        $sessions = DB::table('sessions')->where('user_id', $user->id)->get();
+        $currentSessionId = session()->getId();
         return Inertia::render('Profile/Show', [
             'confirmsTwoFactorAuthentication' => false,
-            'sessions' => [],
+            'sessions' => $sessions,
+            'currentSessionId' => $currentSessionId,
             'jetstream' => [
                 'canUpdateProfileInformation' => true,
                 'canUpdatePassword' => true,
