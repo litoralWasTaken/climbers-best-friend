@@ -1,6 +1,6 @@
 <template>
-    <nav>
-        <button id="hamburger" @click="toggleNavbar" class="shadow-md">
+    <nav class="fixed .top-0 w-full">
+        <button id="hamburger" @click="toggleNavbar">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -52,8 +52,8 @@ export default {
                 { 'name': 'Perfil', 'link': '/profile' },
             ],
             notLoggedLinks: [
-                {'name': 'Iniciar sesión', 'link': '/login'},
-                {'name': 'Regístrate', 'link': '/register'},
+                { 'name': 'Iniciar sesión', 'link': '/login' },
+                { 'name': 'Regístrate', 'link': '/register' },
             ]
         }
     },
@@ -63,14 +63,14 @@ export default {
         },
 
         resize() {
-            if (window.innerWidth >= 720) {
+            if (window.innerWidth >= 768) {
                 this.dropdownOpen = true;
             }
         }
     },
 
     created() {
-        if (window.innerWidth >= 720) {
+        if (window.innerWidth >= 768) {
             this.dropdownOpen = true;
         }
         window.addEventListener('resize', this.resize);
@@ -100,7 +100,7 @@ button {
     padding: 10px
 }
 
-@media screen and (min-width:720px) {
+@media screen and (min-width:768px) {
 
     #hamburger {
         display: none
@@ -114,6 +114,7 @@ button {
         flex-direction: row;
         justify-content: flex-start;
     }
+
     li {
         padding-right: 2em
     }
