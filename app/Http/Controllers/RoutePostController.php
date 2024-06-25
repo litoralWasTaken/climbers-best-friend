@@ -10,11 +10,9 @@ class RoutePostController extends Controller
 {
     //
     public function index() {
-        // $routeposts = RoutePost::all();
+        $routeposts = RoutePost::all();
 
-        // return response()->json($routeposts);
-
-        return response()->json(['Hola']);
+        return response()->json($routeposts);
     }
 
     public function show($index) {
