@@ -48,6 +48,9 @@ export default {
             }
         }).addTo(this.initialMap)
 
+        this.initialMap.on('click', this.removeMapResult)
+        this.initialMap.on('drag', this.removeMapResult)
+
 
         this.layer = omnivore.kml('/lapedriza.kml')
             .on('ready', (layerInternal) => {
@@ -58,6 +61,9 @@ export default {
     },
 
     methods: {
+        removeMapResult() {
+            this.showResult = false
+        },
         addClickEvent(layer) {
             for (const key in layer.sourceTarget._layers) {
                 if (Object.hasOwnProperty.call(layer.sourceTarget._layers, key)) {
