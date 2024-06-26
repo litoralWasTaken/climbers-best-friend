@@ -3,13 +3,13 @@
 
         <h2 class="text-4xl font-extrabold dark:text-white">{{ pointData.point_name }}</h2>
         <p class="my-4 text-lg text-gray-500">Bloques encontrados:</p>
-        <MapResultTable :myRoutes="myBoulders"></MapResultTable>
+        <MapResultTable @getPosts="getPosts" :myRoutes="myBoulders"></MapResultTable>
 
         <p class="my-4 text-lg text-gray-500">Vías deportivas encontradas:</p>
-        <MapResultTable :myRoutes="mySportRoutes"></MapResultTable>
+        <MapResultTable @getPosts="getPosts" :myRoutes="mySportRoutes"></MapResultTable>
 
         <p class="my-4 text-lg text-gray-500">Vías tradicionales encontradas:</p>
-        <MapResultTable :myRoutes="myTradRoutes"></MapResultTable>
+        <MapResultTable @getPosts="getPosts" :myRoutes="myTradRoutes"></MapResultTable>
     </div>
 </template>
 <script>
@@ -61,7 +61,18 @@ export default {
 
             }
         }
-    }
+    },
+    methods: {
+        getPosts(id, name) {
+            axios.get(`/api/posts/${id}`).then(response => {
+                this.$emit('updateShowResult', response.data);
+            }).catch(error => {
+                // chapuza para poder pescar datos del
+                Object.assign(error, {'name': name, 'folder_name': this.pointData.point_name})
+                this.$emit('updateShowError', error)
+            })
+        }
+    },
 }
 </script>
 <style>

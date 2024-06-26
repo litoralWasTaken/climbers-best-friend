@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Route_Post_Media extends Model
+class RoutePostMedia extends Model
 {
     use HasFactory;
 

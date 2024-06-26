@@ -2,7 +2,8 @@
     <ErrorAlert :showAlert="showAlert" :alertErrors="alertErrors" @updateShowAlert="showAlert = false"></ErrorAlert>
     <div id="map" style="">
     </div>
-    <MapResult :showResult="showResult" :pointData="pointData"></MapResult>
+    <MapResult :showResult="showResult" :pointData="pointData" @updateShowResult="updateShowResult" @updateShowError="updateShowError"></MapResult>
+    <MapPost :showPosts="showPosts" :posts="posts" @goBackResult="goBackResult"></MapPost>
 </template>
 
 <script>
@@ -12,12 +13,14 @@ import * as L from 'leaflet';
 import * as omnivore from 'leaflet-omnivore'
 import ErrorAlert from '../common/ErrorAlert.vue'
 import MapResult from '../map/MapResult.vue'
+import MapPost from "./MapPost.vue";
 
 
 export default {
     components: {
         ErrorAlert,
-        MapResult
+        MapResult,
+        MapPost
     },
     data() {
         return {
@@ -28,7 +31,10 @@ export default {
             alertErrors: [],
 
             showResult: false,
-            pointData: {}
+            pointData: {},
+
+            showPosts: false,
+            posts: [],
         };
     },
     mounted() {
@@ -63,6 +69,7 @@ export default {
     methods: {
         removeMapResult() {
             this.showResult = false
+            this.showPosts = false
         },
         addClickEvent(layer) {
             for (const key in layer.sourceTarget._layers) {
@@ -79,6 +86,9 @@ export default {
                                 axios.get(`/api/routes`)
                                     .then(resp => {
                                         this.showResult = true;
+                                        if (this.showPosts) {
+                                            this.showPosts = false
+                                        }
                                         this.pointData = {};
                                         this.pointData = resp.data
                                         Object.assign(this.pointData, {'point_name': folderName})
@@ -87,6 +97,7 @@ export default {
                                         this.alertErrors.push(error.response.status)
                                         this.alertErrors.push(error.response.data.message)
                                         this.showAlert = true;
+
                                     })
                             })
                         }
@@ -94,12 +105,39 @@ export default {
                 }
             }
         },
+
+        updateShowResult(response) {
+            // this.showResult = false;
+            this.showPosts = true
+            this.posts = response
+            Object.assign(this.posts, {'folder_name': this.pointData.point_name})
+        },
+        updateShowError(error) {
+            if (error.response.data.message.includes('Ruta sin comentarios')) {
+                this.posts = {
+                    'route': {
+                        'name': error.name,
+                        'folder_name': error.folder_name
+                    },
+                    'folder_name': this.pointData.point_name
+                }
+
+                this.showPosts = true
+            } else {
+                this.alertErrors = []
+                this.alertErrors.push(error.response.status)
+                this.alertErrors.push(error.response.data.message)
+                this.showAlert = true
+            }
+        },
+
+        goBackResult() {
+            this.showPosts = false
+        },
     },
 
 
-    updateShowResult() {
-        console.log('no implementado');
-    },
+
 
     created() {
     }
