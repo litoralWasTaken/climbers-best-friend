@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-            <div class="ml-auto"> Valoración: {{ commentData.rating }}</div>
+            <div class="ml-auto mr-5"> Valoración: {{ commentData.rating }}/5</div>
         </div>
 
 
