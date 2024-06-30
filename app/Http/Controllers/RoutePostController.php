@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Route;
 use App\Models\RoutePost;
 use App\Models\RoutePostMedia;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoutePostController extends Controller
@@ -23,6 +24,15 @@ class RoutePostController extends Controller
             if ($route) {
 
                 $route_media = RoutePostMedia::where('route_id', $index)->get();
+
+                foreach ($routeposts as $key => $routepost) {
+                    $user = User::find($routepost->user_id);
+                    if ($user) {
+                        $routepost->user_name = $user->name;
+                        $routepost->user_profile_photo_path = $user->profile_photo_path;
+
+                    }
+                }
                 return response()->json([
                     'route' => $route,
                     'posts' => $routeposts,
