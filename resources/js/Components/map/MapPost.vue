@@ -51,18 +51,6 @@
             <div class="w-full divide-y" v-if="posts.posts && posts.posts.length > 0">
                 <template v-for="(post, i) in posts.posts">
                     <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
-                    <MapPostComment :commentData="post"></MapPostComment>
                 </template>
             </div>
         </div>
