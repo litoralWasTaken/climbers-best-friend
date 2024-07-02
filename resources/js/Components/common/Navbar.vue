@@ -10,7 +10,7 @@
             <ul v-if="dropdownOpen">
                 <template v-for="linkObj in links">
                     <li>
-                        <Link :href="linkObj.link" :class="getCurrentLink == linkObj.link ? 'text-purple-700' : ''">
+                        <Link :href="linkObj.link" :class="getCurrentLink == linkObj.link ? 'text-indigo-700' : ''">
                         {{ linkObj.name }}
                         </Link>
                     </li>
