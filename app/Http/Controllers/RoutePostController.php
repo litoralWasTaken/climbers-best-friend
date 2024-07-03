@@ -67,14 +67,16 @@ class RoutePostController extends Controller
 
         $postId = $post->id;
 
-        $validateFiles = $request->validate([
-            'media' => 'array|max:4',
-            'media.*' => 'nullable|file|mimes:jpg,png,mp4,mkv'
-        ]);
+        // $validateFiles = $request->validate([
+        //     'media' => 'array|max:4',
+        //     'media.*' => 'nullable|file|mimes:jpg,png,mp4,mkv'
+        // ]);
 
         foreach ($request->file('media', []) as $index => $file) {
-            # code...
             if ($file) {
+                $validateFiles = $request->validate([
+                    'media.*' => 'mimes:jpg,png,mp4,mkv'
+                ]);
 
                 $filePath = $file->store('uploads', 'public');
 

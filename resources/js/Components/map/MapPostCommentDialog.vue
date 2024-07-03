@@ -169,7 +169,6 @@ export default {
                 }
             });
             event.target.value = null;
-            console.log(this.formCommentOptions.media);
         },
 
         deleteFileItem(index, $event) {
@@ -185,7 +184,6 @@ export default {
             } else if (this.formCommentOptions.ascentDate.length <= 0) {
                 this.error = 'La fecha de ascensión debe estar rellena'
                 canSendComment = false
-
             }
 
 

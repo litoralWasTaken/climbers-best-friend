@@ -1,5 +1,5 @@
 <template>
-    <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @add-comment="addComment"></MapPostCommentDialog>
+    <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @addComment="addComment"></MapPostCommentDialog>
     <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y" v-if="showPosts">
         <div class="flex flex-row">
             <div class="pt-3 mr-3 ml-3" @click="goBack">
@@ -129,8 +129,12 @@ export default {
         addComment(formCommentOptions) {
             Object.assign(formCommentOptions, {'route_id': this.posts.route.id})
 
-            axios.post('/api/posts/upload', formCommentOptions).then(resp => {
-                console.log(resp);
+
+            axios.post('/api/posts/upload', formCommentOptions, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(resp => {
                 this.commentSuccess = JSON.stringify(resp.data.message)
             }).catch(err => {
                 this.commentError = JSON.stringify(err.response.data.message)
