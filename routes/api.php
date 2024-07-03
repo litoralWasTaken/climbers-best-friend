@@ -14,3 +14,7 @@ Route::get('/routes/{index}', [RouteController::class, 'show']);
 
 Route::get('/posts', [RoutePostController::class, 'index']);
 Route::get('/posts/{index}', [RoutePostController::class, 'show']);
+
+// Route::post('/posts/upload', [RoutePostController::class, 'store'])->middleware('auth:sanctum');
+
+Route::middleware('web')->post('/posts/upload', [RoutePostController::class, 'store']);

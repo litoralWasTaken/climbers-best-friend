@@ -1,4 +1,5 @@
 <template>
+    <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @add-comment="addComment"></MapPostCommentDialog>
     <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y" v-if="showPosts">
         <div class="flex flex-row">
             <div class="pt-3 mr-3 ml-3" @click="goBack">
@@ -30,7 +31,8 @@
             <Carousel :items-to-show="3" class="mb-3">
                 <Slide v-for="(media, i) in posts.route_media" :key="i">
                     <!-- {{ media.photo_or_video_url }} -->
-                      <img :src="'storage/' + media.photo_or_video_url" :alt="i" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                    <img :src="'storage/' + media.photo_or_video_url" :alt="i"
+                        @click="fullscreenImage('storage/' + media.photo_or_video_url)">
                 </Slide>
 
                 <template #addons>
@@ -46,7 +48,7 @@
                 No hay ningún comentario :(
             </h3>
 
-            <PrimaryButton class="mt-4">Añade un comentario</PrimaryButton>
+            <PrimaryButton class="mt-4" @click="openModal = !openModal">Añade un comentario</PrimaryButton>
 
             <div class="w-full divide-y" v-if="posts.posts && posts.posts.length > 0">
                 <template v-for="(post, i) in posts.posts">
@@ -63,14 +65,17 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import MapPostComment from '@/Components/map/MapPostComment.vue';
+import MapPostCommentDialog from './MapPostCommentDialog.vue';
 export default {
+    emits: ['goBackResult'],
     components: {
         Carousel,
         Slide,
         Pagination,
         Navigation,
         PrimaryButton,
-        MapPostComment
+        MapPostComment,
+        MapPostCommentDialog,
     },
 
     props: {
@@ -86,7 +91,10 @@ export default {
 
     data() {
         return {
-            averageRating: null
+            averageRating: null,
+            openModal: false,
+            commentError: '',
+            commentSuccess: '',
         }
     },
 
@@ -104,17 +112,32 @@ export default {
         }
     },
 
+
     methods: {
+        closeModal() {
+            this.openModal = !this.openModal
+            this.commentError = ''
+        },
         goBack() {
-            this.$emit('goBackResult')
+            this.$emit('goBackResult', null)
         },
 
         fullscreenImage(src) {
             window.open(src, '_blank')
-        }
+        },
 
-    }
+        addComment(formCommentOptions) {
+            Object.assign(formCommentOptions, {'route_id': this.posts.route.id})
 
+            axios.post('/api/posts/upload', formCommentOptions).then(resp => {
+                console.log(resp);
+                this.commentSuccess = JSON.stringify(resp.data.message)
+            }).catch(err => {
+                this.commentError = JSON.stringify(err.response.data.message)
+            })
+        },
+
+    },
 }
 </script>
 <style></style>

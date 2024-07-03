@@ -19,6 +19,12 @@ return new class extends Migration
             $table->unsignedBigInteger('route_id');
             $table->foreign('route_id')->references('id')->on('routes');
 
+            $table->unsignedBigInteger('route_post_id');
+            $table->foreign('route_post_id')->references('id')->on('route_posts');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
 
             $table->timestamps();
         });

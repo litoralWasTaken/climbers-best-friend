@@ -11,11 +11,21 @@ class RoutePostMedia extends Model
 
     protected $fillable = [
         'route_id',
-        'photo_or_video_url'
+        'photo_or_video_url',
+        'user_id',
+        'route_post_id',
     ];
 
 
-    public function route_post() {
+    public function route_id() {
+        return $this->belongsTo(Route::class);
+    }
+
+    public function route_post_id() {
         return $this->belongsTo(RoutePost::class);
+    }
+
+    public function user_id() {
+        return $this->belongsTo(User::class);
     }
 }
