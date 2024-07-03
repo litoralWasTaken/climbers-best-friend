@@ -34,6 +34,12 @@
                                 <span class="font-medium text-gray-600">
                                     Arrastra y suelta archivos para añadir, o
                                     <span class="text-indigo-700 underline">buscar</span>
+                                    <p class="block">
+                                        (extensiones aceptadas: JPG,PNG,MP4,MKV)
+                                    </p>
+
+
+
                                 </span>
                             </template>
                             <template v-else>
@@ -161,11 +167,16 @@ export default {
 
 
         addFiles(event) {
+            const allowedTypes = ['image/jpeg', 'image/png', 'video/x-matroska', 'video/mp4'];
             const selectedFiles = Array.from(event.target.files);
             selectedFiles.forEach(file => {
                 const index = this.formCommentOptions.media.indexOf(undefined);
                 if (index !== -1) {
-                    this.formCommentOptions.media[index] = file;
+                    if (allowedTypes.includes(file.type)) {
+                        this.formCommentOptions.media[index] = file;
+                    } else {
+                        this.error = 'Extensión no soportada. Extensiones aceptadas: JPG, PNG, MKV, MP4'
+                    }
                 }
             });
             event.target.value = null;

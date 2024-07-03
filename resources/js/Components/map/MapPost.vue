@@ -31,8 +31,15 @@
             <Carousel :items-to-show="3" class="mb-3">
                 <Slide v-for="(media, i) in posts.route_media" :key="i">
                     <!-- {{ media.photo_or_video_url }} -->
-                    <img :src="'storage/' + media.photo_or_video_url" :alt="i"
-                        @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                    <template v-if="isImage(media)">
+                        <img :src="'storage/' + media.photo_or_video_url" :alt="i"
+                            class="w-80 h-64" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                    </template>
+
+                    <template v-else-if="isVideo(media)">
+                        <video class="w-80 h-64" :src="'storage/' + media.photo_or_video_url" controls muted></video>
+                    </template>
+
                 </Slide>
 
                 <template #addons>
@@ -95,6 +102,9 @@ export default {
             openModal: false,
             commentError: '',
             commentSuccess: '',
+            imageExtensions: ['png', 'jpg'],
+            videoExtensions: ['mkv', 'mp4']
+
         }
     },
 
@@ -141,6 +151,14 @@ export default {
             })
         },
 
+        isImage(media) {
+            return this.imageExtensions.includes(media.photo_or_video_url.split('.')[1].toLowerCase())
+
+        },
+        isVideo(media) {
+            return this.videoExtensions.includes(media.photo_or_video_url.split('.')[1].toLowerCase())
+
+        },
     },
 }
 </script>
