@@ -1,9 +1,9 @@
 <template>
     <div class="h- w-full">
         <div class="pt-3 flex flex-row">
-            <!-- TODO: cambiar por datos datos de usuario de verdad -->
-            <img :src="`storage/${commentData.user_profile_photo_path}`" :alt="commentData.user_name"
+            <img v-if="commentData.user_profile_photo_path" :src="`storage/${commentData.user_profile_photo_path}`" :alt="commentData.user_name"
                 class="rounded-full h-12 w-12 object-cover">
+            <img v-else :src=" 'https://ui-avatars.com/api/?name=' + commentData.user_profile_photo_path + '&color=7F9CF5&background=EBF4FF'" alt="commentData.user_name" class="rounded-full h-12 w-12 object-cover">
             <div class="flex flex-col pl-3">
                 <p>{{ commentData.user_name }}</p>
                 <div class="flex flex-row">
