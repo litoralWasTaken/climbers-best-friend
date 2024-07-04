@@ -101,7 +101,8 @@ const clearPhotoFileInput = () => {
 
                 <!-- Current Profile Photo -->
                 <div v-show="! photoPreview" class="mt-2">
-                    <img :src="'storage/' + user.profile_photo_path" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
+                    <img v-if="user.profile_photo_path" :src="'storage/' + user.profile_photo_path" :alt="user.name" class="rounded-full h-20 w-20 object-cover">
+                    <img v-else :src=" 'https://ui-avatars.com/api/?name=' + user.name + '&color=7F9CF5&background=EBF4FF'" alt="commentData.user_name" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
