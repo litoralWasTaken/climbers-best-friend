@@ -61,7 +61,7 @@
                 <InputError v-if="error.length > 0" :message="error" class="mt-2"/>
 
 
-                <p class="text-lime-500 mt-3">{{ commentSuccess.slice(1, -1) }}</p>
+                <p class="text-green-500 mt-3">{{ commentSuccess.slice(1, -1) }}</p>
 
             </div>
         </template>
