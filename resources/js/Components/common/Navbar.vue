@@ -49,7 +49,7 @@ export default {
             links: [
                 { 'name': 'Inicio', 'link': '/dashboard' },
                 { 'name': 'Mapa', 'link': '/map' },
-                { 'name': 'Perfil', 'link': '/profile' },
+                { 'name': 'Ajustes', 'link': '/settings' },
             ],
             notLoggedLinks: [
                 { 'name': 'Iniciar sesión', 'link': '/login' },

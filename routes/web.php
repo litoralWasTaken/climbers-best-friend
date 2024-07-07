@@ -29,7 +29,7 @@ Route::middleware([
     })->name('map');
 
 
-    Route::get('/profile', function () {
+    Route::get('settings', function () {
         $user = Auth::user();
         $sessions = DB::table('sessions')->where('user_id', $user->id)->get();
         $currentSessionId = session()->getId();
