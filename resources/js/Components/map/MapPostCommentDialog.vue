@@ -57,7 +57,7 @@
                 </div>
 
 
-                <InputError v-if="commentError.length > 0" :message="commentError.slice(1, -1)" class="mt-2" />
+                <InputError v-if="commentError.length > 0 && commentSuccess <= 0" :message="commentError.slice(1, -1)" class="mt-2" />
                 <InputError v-if="error.length > 0" :message="error" class="mt-2"/>
 
 

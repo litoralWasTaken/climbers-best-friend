@@ -1,5 +1,6 @@
 <template>
     <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @addComment="addComment"></MapPostCommentDialog>
+    <MapPostDeletionDialog :openDialog="openDeleteDialog" :postId="commentDeleteId" :comment="deleteMessage" :success="deleteSuccess" @closeDeleteDialog="closeDeleteDialog" @deleteCommentCall="deleteCommentCall"/>
     <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y" v-if="showPosts">
         <div class="flex flex-row">
             <div class="pt-3 mr-3 ml-3" @click="goBack">
@@ -49,7 +50,7 @@
             </Carousel>
         </div>
 
-        <div class="w-full h-full flex flex-col items-center overflow-scroll">
+        <div class="w-full h-full flex flex-col items-center overflow-y-scroll">
 
             <h3 v-if="!posts.posts" class="text-4xl font-extrabold text-center mt-3 ">
                 No hay ningún comentario :(
@@ -57,9 +58,9 @@
 
             <PrimaryButton class="mt-4" @click="openModal = !openModal">Añade un comentario</PrimaryButton>
 
-            <div class="w-full divide-y" v-if="posts.posts && posts.posts.length > 0">
-                <template v-for="(post, i) in posts.posts">
-                    <MapPostComment :commentData="post"></MapPostComment>
+            <div class="w-full divide-y" v-if="postArray && postArray.length > 0">
+                <template v-for="(post, i) in postArray">
+                    <MapPostComment :commentData="post" @deleteComment="deleteComment"></MapPostComment>
                 </template>
             </div>
         </div>
@@ -73,6 +74,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import MapPostComment from '@/Components/map/MapPostComment.vue';
 import MapPostCommentDialog from './MapPostCommentDialog.vue';
+import MapPostDeletionDialog from './MapPostDeletionDialog.vue';
 export default {
     emits: ['goBackResult'],
     components: {
@@ -83,6 +85,7 @@ export default {
         PrimaryButton,
         MapPostComment,
         MapPostCommentDialog,
+        MapPostDeletionDialog
     },
 
     props: {
@@ -102,26 +105,43 @@ export default {
             openModal: false,
             commentError: '',
             commentSuccess: '',
+            deleteMessage: '',
+            deleteSuccess: false,
             imageExtensions: ['png', 'jpg'],
-            videoExtensions: ['mkv', 'mp4']
+            videoExtensions: ['mkv', 'mp4'],
+            openDeleteDialog: false,
+            commentDeleteId: NaN,
 
+            postArray: [],
         }
     },
 
     watch: {
         posts(newValue) {
-            if (newValue.length > 0) {
+
+            if (newValue) {
                 let sum = 0;
                 this.posts.posts.forEach(post => {
                     sum += post.rating
-                })
 
+
+                    let auxPost = post
+                    Object.assign(auxPost, {'media': []})
+                    this.posts.route_media.forEach(media => {
+                        if (media.route_post_id == post.id) {
+                            auxPost.media.push(media)
+                        }
+                    })
+
+                    this.postArray.push(auxPost)
+                })
                 this.averageRating = sum / this.posts.posts.length
+                this.averageRating = this.averageRating.toFixed(2)
             }
+            // console.log(this.postArray);
 
         }
     },
-
 
     methods: {
         closeModal() {
@@ -157,8 +177,28 @@ export default {
         },
         isVideo(media) {
             return this.videoExtensions.includes(media.photo_or_video_url.split('.')[1].toLowerCase())
+        },
+
+        deleteComment(commentId) {
+            this.commentDeleteId = commentId
+            this.openDeleteDialog = true
+            this.deleteMessage = `¿Estás seguro que quieres borrar el comentario con ID ${commentId}? Los medios audiovisuales incluidos serán borrados también.`
 
         },
+        closeDeleteDialog() {
+            this.openDeleteDialog = false
+            this.deleteSuccess = false
+
+        },
+
+        deleteCommentCall(index) {
+            axios.post('/api/posts/delete', {'index': index}).then(resp => {
+                this.deleteMessage = resp.data.message
+                this.deleteSuccess = true
+            }).catch(err => {
+                this.deleteMessage = err.response.data
+            })
+        }
     },
 }
 </script>

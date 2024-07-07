@@ -91,7 +91,13 @@ class RoutePostController extends Controller
             }
         }
         return response()->json(['message' => 'Comentario añadido satisfactoriamente']);
-
-
     }
+
+    public function delete(Request $request) {
+        $post = RoutePost::find($request->index);
+        $post->delete();
+
+        return response()->json(['message' => 'Borrado el comentario ' . $request->index]);
+    }
+
 }

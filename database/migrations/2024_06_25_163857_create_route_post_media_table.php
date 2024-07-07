@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreign('route_id')->references('id')->on('routes');
 
             $table->unsignedBigInteger('route_post_id');
-            $table->foreign('route_post_id')->references('id')->on('route_posts');
+            $table->foreign('route_post_id')->references('id')->on('route_posts')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
 
             $table->timestamps();
