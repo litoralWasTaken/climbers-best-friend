@@ -1,5 +1,5 @@
 <template>
-    <div class="h- w-full">
+    <div class="w-full">
         <div class="pt-3 flex flex-row">
             <img v-if="commentData.user_profile_photo_path" :src="`storage/${commentData.user_profile_photo_path}`"
                 :alt="commentData.user_name" class="rounded-full h-12 w-12 object-cover">
@@ -43,11 +43,11 @@
                 <!-- {{ media.photo_or_video_url }} -->
                 <template v-if="isImage(media)">
                     <img :src="'storage/' + media.photo_or_video_url" :alt="i"
-                        class="w-80 h-64" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                        class="w-auto h-16" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
                 </template>
 
                 <template v-else-if="isVideo(media)">
-                    <video class="w-80 h-64" :src="'storage/' + media.photo_or_video_url" controls muted></video>
+                    <video class="w-auto h-16" :src="'storage/' + media.photo_or_video_url" controls muted></video>
                 </template>
 
             </Slide>
@@ -101,12 +101,6 @@ export default {
             return this.videoExtensions.includes(media.photo_or_video_url.split('.')[1].toLowerCase())
         },
     },
-
-    mounted() {
-
-        console.log(this.commentData);
-    },
-
 }
 </script>
 <style></style>

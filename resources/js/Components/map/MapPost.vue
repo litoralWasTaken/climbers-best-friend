@@ -1,7 +1,7 @@
 <template>
     <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @addComment="addComment"></MapPostCommentDialog>
     <MapPostDeletionDialog :openDialog="openDeleteDialog" :postId="commentDeleteId" :comment="deleteMessage" :success="deleteSuccess" @closeDeleteDialog="closeDeleteDialog" @deleteCommentCall="deleteCommentCall"/>
-    <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y" v-if="showPosts">
+    <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y overflow-scroll" v-if="showPosts">
         <div class="flex flex-row">
             <div class="pt-3 mr-3 ml-3" @click="goBack">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -16,7 +16,7 @@
                 <p class="mb-6 text-lg font-normal text-gray-500 ">Parte de sector: {{ posts.folder_name }}</p>
             </div>
 
-            <div class="right-0 fixed pr-16 flex flex-col" v-if="averageRating">
+            <div class="md:right-0 md:fixed md:pr-16 flex flex-col" v-if="averageRating">
                 <p>Valoración media: </p>
 
                 <h2 class="text-2xl font-bold text-center">{{ averageRating }}/5</h2>
@@ -34,11 +34,11 @@
                     <!-- {{ media.photo_or_video_url }} -->
                     <template v-if="isImage(media)">
                         <img :src="'storage/' + media.photo_or_video_url" :alt="i"
-                            class="w-80 h-64" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                            class="w-auto h-16" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
                     </template>
 
                     <template v-else-if="isVideo(media)">
-                        <video class="w-80 h-64" :src="'storage/' + media.photo_or_video_url" controls muted></video>
+                        <video class="w-auto h-16" :src="'storage/' + media.photo_or_video_url" controls muted></video>
                     </template>
 
                 </Slide>
@@ -135,11 +135,10 @@ export default {
 
                     this.postArray.push(auxPost)
                 })
+
                 this.averageRating = sum / this.posts.posts.length
                 this.averageRating = this.averageRating.toFixed(2)
             }
-            // console.log(this.postArray);
-
         }
     },
 
