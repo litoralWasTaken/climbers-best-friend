@@ -1,22 +1,23 @@
 <template>
-    <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess" @close-modal="closeModal" @addComment="addComment"></MapPostCommentDialog>
-    <MapPostDeletionDialog :openDialog="openDeleteDialog" :postId="commentDeleteId" :comment="deleteMessage" :success="deleteSuccess" @closeDeleteDialog="closeDeleteDialog" @deleteCommentCall="deleteCommentCall"/>
-    <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y overflow-scroll" v-if="showPosts">
-        <div class="flex flex-row">
-            <div class="pt-3 mr-3 ml-3" @click="goBack">
+    <MapPostCommentDialog :openModal="openModal" :commentError="commentError" :commentSuccess="commentSuccess"
+        @close-modal="closeModal" @addComment="addComment"></MapPostCommentDialog>
+    <MapPostDeletionDialog :openDialog="openDeleteDialog" :postId="commentDeleteId" :comment="deleteMessage"
+        :success="deleteSuccess" @closeDeleteDialog="closeDeleteDialog" @deleteCommentCall="deleteCommentCall" />
+    <div class="h-3/4 w-full bg-white fixed z-[9999] bottom-0 rounded-t-3xl p-4 divide-y overflow-scroll"
+        v-if="showPosts">
+        <div class="flex flex-row justify-between">
+            <div class="pt-3 mr-3 ml-3 flex flex-row" @click="goBack">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                    stroke="currentColor" class="size-6 mt-3 mr-3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
                 </svg>
+                <div>
+                    <h2 class="text-4xl font-extrabold">{{ posts.route.name }}</h2>
+
+                    <p class="mb-6 text-lg font-normal text-gray-500 ">Parte de sector: {{ posts.folder_name }}</p>
+                </div>
             </div>
-
-            <div>
-                <h2 class="text-4xl font-extrabold">{{ posts.route.name }}</h2>
-
-                <p class="mb-6 text-lg font-normal text-gray-500 ">Parte de sector: {{ posts.folder_name }}</p>
-            </div>
-
-            <div class="md:right-0 md:fixed md:pr-16 flex flex-col" v-if="averageRating">
+            <div class="md:pr-16 pt-3 flex flex-col" v-if="averageRating">
                 <p>Valoración media: </p>
 
                 <h2 class="text-2xl font-bold text-center">{{ averageRating }}/5</h2>
@@ -33,12 +34,12 @@
                 <Slide v-for="(media, i) in posts.route_media" :key="i">
                     <!-- {{ media.photo_or_video_url }} -->
                     <template v-if="isImage(media)">
-                        <img :src="'storage/' + media.photo_or_video_url" :alt="i"
-                            class="w-auto h-16" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                        <img :src="'storage/' + media.photo_or_video_url" :alt="i" class="w-auto h-32"
+                            @click="fullscreenImage('storage/' + media.photo_or_video_url)">
                     </template>
 
                     <template v-else-if="isVideo(media)">
-                        <video class="w-auto h-16" :src="'storage/' + media.photo_or_video_url" controls muted></video>
+                        <video class="w-auto h-32" :src="'storage/' + media.photo_or_video_url" controls muted></video>
                     </template>
 
                 </Slide>
@@ -126,7 +127,7 @@ export default {
 
 
                     let auxPost = post
-                    Object.assign(auxPost, {'media': []})
+                    Object.assign(auxPost, { 'media': [] })
                     this.posts.route_media.forEach(media => {
                         if (media.route_post_id == post.id) {
                             auxPost.media.push(media)
@@ -156,7 +157,7 @@ export default {
         },
 
         addComment(formCommentOptions) {
-            Object.assign(formCommentOptions, {'route_id': this.posts.route.id})
+            Object.assign(formCommentOptions, { 'route_id': this.posts.route.id })
 
 
             axios.post('/api/posts/upload', formCommentOptions, {
@@ -191,7 +192,7 @@ export default {
         },
 
         deleteCommentCall(index) {
-            axios.post('/api/posts/delete', {'index': index}).then(resp => {
+            axios.post('/api/posts/delete', { 'index': index }).then(resp => {
                 this.deleteMessage = resp.data.message
                 this.deleteSuccess = true
             }).catch(err => {
