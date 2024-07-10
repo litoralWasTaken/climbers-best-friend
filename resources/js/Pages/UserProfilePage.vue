@@ -42,9 +42,6 @@
                                 {{errorMessage}}
                             </div>
                         </template>
-
-
-
                     </div>
             </div>
 
@@ -56,9 +53,6 @@
         </div>
         <div class="hidden lg:block md:w-1/3 h-full"></div>
     </div>
-
-    <div>{{ user }}</div>
-    <div>{{ posts }}</div>
 </template>
 <script>
 import AppLayout from '@/Layouts/AppLayout.vue';
