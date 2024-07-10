@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full pb-3 pl-3">
         <div class="pt-3 flex flex-row">
             <img v-if="commentData.user_profile_photo_path" :src="`storage/${commentData.user_profile_photo_path}`"
                 :alt="commentData.user_name" class="rounded-full h-12 w-12 object-cover">
@@ -7,7 +7,7 @@
                 :src="'https://ui-avatars.com/api/?name=' + commentData.user_name + '&color=7F9CF5&background=EBF4FF'"
                 alt="commentData.user_name" class="rounded-full h-12 w-12 object-cover">
             <div class="flex flex-col pl-3">
-                <p>{{ commentData.user_name }}</p>
+                <Link :href="userUrl" class="hover:underline">{{ commentData.user_name }}</Link>
                 <div class="flex flex-row">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="rgb(107, 114, 128)" class="size-6">
@@ -16,6 +16,20 @@
                     </svg>
                     <p class="text-gray-500">
                         {{ commentData.ascent_date }}
+                    </p>
+
+                </div>
+                <div class="flex flex-row" v-if="commentData.route_name">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="rgb(107, 114, 128)" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+
+                    <p class="text-gray-500">
+                        {{ commentData.route_name }}
                     </p>
 
                 </div>
@@ -42,12 +56,12 @@
             <Slide v-for="(media, i) in commentData.media" :key="i">
                 <!-- {{ media.photo_or_video_url }} -->
                 <template v-if="isImage(media)">
-                    <img :src="'storage/' + media.photo_or_video_url" :alt="i"
-                        class="w-auto h-16" @click="fullscreenImage('storage/' + media.photo_or_video_url)">
+                    <img :src="'storage/' + media.photo_or_video_url" :alt="i" class="w-auto h-32"
+                        @click="fullscreenImage('storage/' + media.photo_or_video_url)">
                 </template>
 
                 <template v-else-if="isVideo(media)">
-                    <video class="w-auto h-16" :src="'storage/' + media.photo_or_video_url" controls muted></video>
+                    <video class="w-auto h-32" :src="'storage/' + media.photo_or_video_url" controls muted></video>
                 </template>
 
             </Slide>
@@ -62,6 +76,7 @@
 </template>
 <script>
 
+import { Link } from '@inertiajs/vue3';
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css'
 
@@ -74,6 +89,7 @@ export default {
         Slide,
         Pagination,
         Navigation,
+        Link
     },
 
     data() {
@@ -86,6 +102,13 @@ export default {
         commentData: {
             type: Object,
             required: true,
+        },
+    },
+
+
+    computed: {
+        userUrl() {
+            return `/user/${this.commentData.id}`
         }
     },
 
@@ -99,6 +122,10 @@ export default {
         },
         isVideo(media) {
             return this.videoExtensions.includes(media.photo_or_video_url.split('.')[1].toLowerCase())
+        },
+
+        fullscreenImage(src) {
+            window.open(src, '_blank')
         },
     },
 }

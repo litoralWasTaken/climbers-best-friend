@@ -49,6 +49,7 @@ export default {
             links: [
                 { 'name': 'Inicio', 'link': '/dashboard' },
                 { 'name': 'Mapa', 'link': '/map' },
+                { 'name': 'Tu perfil', 'link': '/user' },
                 { 'name': 'Ajustes', 'link': '/settings' },
             ],
             notLoggedLinks: [

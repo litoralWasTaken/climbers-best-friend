@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,11 +23,16 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'user' => Auth::user()
+        ]);
     })->name('dashboard');
     Route::get('/map', function () {
         return Inertia::render('MapPage');
     })->name('map');
+
+
+    Route::get('/user/{id?}', [UserController::class, 'show'])->name('user');
 
 
     Route::get('settings', function () {
@@ -50,5 +56,3 @@ Route::middleware([
         ]);
     })->name('profile');
 });
-
-
