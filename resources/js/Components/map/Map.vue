@@ -77,13 +77,11 @@ export default {
                     const marker = layer.sourceTarget._layers[key];
                     if (marker.feature && marker.feature.properties) {
                         let folderName = marker.feature.properties.name
-                        let leaflet_id = marker._leaflet_id
-
                         if (marker.feature.geometry.type == 'Point') {
+                        console.log(folderName);
+                        console.log(marker._latlng);
                             marker.on('click', () => {
-                                // TODO: cambiar api para que tenga un ID de mapa consistente y use dicha ID
-                                // quizas usar lat/long??
-                                axios.get(`/api/routes`)
+                                axios.get(`/api/routes/`)
                                     .then(resp => {
                                         this.showResult = true;
                                         if (this.showPosts) {

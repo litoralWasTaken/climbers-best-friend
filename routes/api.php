@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/routes', [RouteController::class, 'index']);
-Route::get('/routes/{index}', [RouteController::class, 'show']);
+Route::get('/routes/latlng', [RouteController::class, 'show']);
 
 Route::get('/posts', [RoutePostController::class, 'index']);
 Route::get('/posts/followed/{id}', [RoutePostController::class, 'followed']);

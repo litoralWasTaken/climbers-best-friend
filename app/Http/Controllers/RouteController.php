@@ -15,8 +15,10 @@ class RouteController extends Controller
         return response()->json($routes);
     }
 
-    public function show($index) {
-        $route = Route::where('leaflet_id', $index)->get();
+    public function show(Request $request) {
+        $route = Route::where('lat', $request->lat)
+        ->where('long', $request->lng)
+        ->get();
 
         if (!$route->isEmpty()) {
             return response()->json($route);
