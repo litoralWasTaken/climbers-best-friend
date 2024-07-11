@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('routes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('leaflet_id');
+            $table->decimal('lat', 10, 7);
+            $table->decimal('long', 10, 7);
             $table->text('name');
             $table->text('type');
             $table->tinyText('grade');

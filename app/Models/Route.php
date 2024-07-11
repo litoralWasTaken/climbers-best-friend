@@ -9,7 +9,8 @@ class Route extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'leaflet_id',
+        'lat',
+        'long',
         'name',
         'type', // boulder, deportiva, trad
         'grade', // escala fontainebleau

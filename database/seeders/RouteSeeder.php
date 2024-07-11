@@ -14,6 +14,6 @@ class RouteSeeder extends Seeder
     public function run(): void
     {
         //
-        Route::factory()->create(array('leaflet_id' => 484, 'name' => 'Bloque de prueba', 'type' => 'boulder', 'grade' => '7a+'));
+        Route::factory()->create(array('lat' => -3.89865430000, 'long' => 40.75283490000, 'name' => 'Bloque de prueba', 'type' => 'boulder', 'grade' => '7a+'));
     }
 }
