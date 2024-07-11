@@ -113,10 +113,11 @@ export default {
             if (error.response.data.message.includes('Ruta sin comentarios')) {
                 this.posts = {
                     'route': {
+                        'id': error.id,
                         'name': error.name,
                         'folder_name': error.folder_name
                     },
-                    'folder_name': this.pointData.point_name
+                    'folder_name': this.pointData.point_name,
                 }
 
                 this.showPosts = true

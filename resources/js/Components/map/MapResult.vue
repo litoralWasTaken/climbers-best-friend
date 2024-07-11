@@ -68,7 +68,7 @@ export default {
                 this.$emit('updateShowResult', response.data);
             }).catch(error => {
                 // chapuza para poder pescar datos del
-                Object.assign(error, {'name': name, 'folder_name': this.pointData.point_name})
+                Object.assign(error, {'name': name, 'folder_name': this.pointData.point_name, 'id': id})
                 this.$emit('updateShowError', error)
             })
         }
