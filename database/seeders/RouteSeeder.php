@@ -24,9 +24,9 @@ class RouteSeeder extends Seeder
         Route::factory()->create(array('lat' => 40.7605073, 'long' => -3.893166, 'name' => 'Diagonal Úbeda', 'type' => 'sport', 'grade' => '6c'));
         Route::factory()->create(array('lat' => 40.7605073, 'long' => -3.893166, 'name' => 'A por uvas', 'type' => 'sport', 'grade' => '6b'));
 
-        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Espolón Peña Sirio', 'type' => 'trad,', 'grade' => '5'));
-        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Maldita vecindad', 'type' => 'trad,', 'grade' => '6c+'));
-        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Espolón Peña Sirio', 'type' => 'trad,', 'grade' => '5'));
+        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Espolón Peña Sirio', 'type' => 'trad', 'grade' => '5'));
+        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Maldita vecindad', 'type' => 'trad', 'grade' => '6c+'));
+        Route::factory()->create(array('lat' => 40.75518511603, 'long' => -3.88565360306, 'name' => 'Espolón Peña Sirio', 'type' => 'trad', 'grade' => '5'));
 
 
     }
