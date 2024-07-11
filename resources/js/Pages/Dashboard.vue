@@ -66,7 +66,7 @@ export default {
         this.toggle = false;
 
         this.loadPosts()
-        this.message = 'No sigues a ningún usuario.'
+        this.message = 'No hay comentarios disponibles.'
     },
 
     methods: {
