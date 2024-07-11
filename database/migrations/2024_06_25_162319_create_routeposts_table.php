@@ -19,9 +19,9 @@ return new class extends Migration
             $table->tinyText('comment');
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('route_id');
-            $table->foreign('route_id')->references('id')->on('routes');
+            $table->foreign('route_id')->references('id')->on('routes')->onDelete('cascade');
 
 
             $table->timestamps();
