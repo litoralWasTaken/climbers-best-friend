@@ -74,6 +74,8 @@ export default {
             if (!this.toggle) {
                 // todos los posts de la app
                 axios.get('/api/posts').then(resp => {
+                    console.log('dashboard');
+                    console.log(resp.data);
                     this.posts = resp.data
                 }).catch(err => {
                     this.message = err
@@ -97,7 +99,7 @@ export default {
         deleteComment(id) {
             this.commentDeleteId = id
             this.openDeleteDialog = true
-            this.deleteMessage = `¿Estás seguro que quieres borrar el comentario con ID ${commentId}? Los medios audiovisuales incluidos serán borrados también.`
+            this.deleteMessage = `¿Estás seguro que quieres borrar el comentario con ID ${this.commentDeleteId}? Los medios audiovisuales incluidos serán borrados también.`
         },
 
         closeDeleteDialog() {
@@ -107,7 +109,7 @@ export default {
         },
 
         deleteCommentCall(id) {
-            axios.post('/api/posts/delete', {'index': index}).then(resp => {
+            axios.post('/api/posts/delete', {'index': id}).then(resp => {
                 this.deleteMessage = resp.data.message
                 this.deleteSuccess = true
             }).catch(err => {
