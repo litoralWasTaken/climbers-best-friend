@@ -78,8 +78,6 @@ export default {
                     if (marker.feature && marker.feature.properties) {
                         let folderName = marker.feature.properties.name
                         if (marker.feature.geometry.type == 'Point') {
-                        console.log(folderName);
-                        console.log(marker._latlng);
                             marker.on('click', () => {
                                 axios.get(`/api/routes/`)
                                     .then(resp => {
@@ -105,6 +103,7 @@ export default {
         },
 
         updateShowResult(response) {
+            console.log('muestra');
             // this.showResult = false;
             this.showPosts = true
             this.posts = response

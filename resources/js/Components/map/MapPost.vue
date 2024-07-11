@@ -120,7 +120,7 @@ export default {
     watch: {
         posts(newValue) {
 
-            if (newValue) {
+            if (newValue && this.posts.posts !== undefined) {
                 let sum = 0;
                 this.posts.posts.forEach(post => {
                     sum += post.rating
