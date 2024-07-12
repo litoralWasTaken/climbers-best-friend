@@ -1,5 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -30,7 +31,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Inicia sesión" />
+    <AppLayout title="Conéctate"></AppLayout>
 
     <AuthenticationCard>
         <template #logo>

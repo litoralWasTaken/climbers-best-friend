@@ -6,6 +6,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
 defineProps({
     status: String,
@@ -21,7 +22,8 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Olvido de contraseña" />
+
+    <AppLayout title="Olvido de contraseña"></AppLayout>
 
     <AuthenticationCard>
         <template #logo>

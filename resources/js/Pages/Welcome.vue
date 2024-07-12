@@ -40,7 +40,7 @@ import { Head, Link } from '@inertiajs/vue3';
 
 
             <div class="w-auto">
-                <Link :href="route('login')"
+                <Link :href="route('register')"
                     class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                         ¡Regístrate!
                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
