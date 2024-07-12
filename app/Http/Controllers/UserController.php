@@ -92,9 +92,9 @@ class UserController extends Controller
         if ($follow) {
             $follow->delete();
 
-            return response()->json(['message' => 'User unfollowed successfully.'], 200);
+            return response()->json(['message' => 'Ya no sigues a este usuario.'], 200);
         }
 
-        return response()->json(['message' => 'You are not following this user.'], 400);
+        return response()->json(['message' => 'No estás siguiendo a este usuario'], 400);
     }
 }
